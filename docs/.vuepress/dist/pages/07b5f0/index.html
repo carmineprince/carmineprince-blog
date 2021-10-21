@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>flvjs+vue 视频播放(手动追帧、断开重连、多个视频同时直播) | Carmineprince&#39;s Blog</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    
+    <meta name="description" content="Stay hungry,stay foolish">
+    <link rel="preload" href="/carmineprince-docs/assets/css/0.styles.06567730.css" as="style"><link rel="preload" href="/carmineprince-docs/assets/js/app.9ec8c49f.js" as="script"><link rel="preload" href="/carmineprince-docs/assets/js/2.f619f824.js" as="script"><link rel="preload" href="/carmineprince-docs/assets/js/27.fcad0c23.js" as="script"><link rel="prefetch" href="/carmineprince-docs/assets/js/10.168cbede.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/11.fc5afb64.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/12.55eeef69.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/13.ccf1d324.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/14.152ca3fb.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/15.ff707f17.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/16.be64fa1d.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/17.fefebb92.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/18.1269d5c8.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/19.5ffe851e.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/20.dcec5363.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/21.25a63944.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/22.b2d00512.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/23.0d721ced.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/24.fbe63f99.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/25.69bcdd10.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/26.f77cc795.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/28.f23ee883.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/29.6dc34a83.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/3.0fa96564.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/30.ea196380.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/31.50e697cf.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/32.1f7c33cc.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/33.561ed4db.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/34.92abcc86.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/35.624dae62.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/36.efe5df69.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/37.862718f2.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/38.13f8b801.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/39.64348f7c.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/4.ca1199f2.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/40.7e09e2aa.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/41.c398166f.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/42.b8ba2a62.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/43.d051e020.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/44.868b44c1.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/45.9af0d924.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/46.4d59d521.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/47.0b0824b7.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/48.31ab0df8.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/49.c0a1f327.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/5.702e90ec.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/50.2b2e2df2.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/51.58bc51cf.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/52.dafa6111.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/53.6ab10328.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/54.cb394dec.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/55.c0833f10.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/6.93ae5fdc.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/7.5a818291.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/8.62dfc38d.js"><link rel="prefetch" href="/carmineprince-docs/assets/js/9.65cd9e9f.js">
+    <link rel="stylesheet" href="/carmineprince-docs/assets/css/0.styles.06567730.css">
+  </head>
+  <body class="theme-mode-light">
+    <div id="app" data-server-rendered="true"><div class="theme-container sidebar-open"><header class="navbar blur"><div title="目录" class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/carmineprince-docs/" class="home-link router-link-active"><!----> <span class="site-name">Carmineprince's Blog</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/carmineprince-docs/" class="nav-link">首页</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="前端" class="dropdown-title"><a href="/carmineprince-docs/web/" class="link-title">前端</a> <span class="title" style="display:none;">前端</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4></h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/carmineprince-docs/pages/6a1054/" class="nav-link">HTML</a></li><li class="dropdown-subitem"><a href="/carmineprince-docs/pages/31329c/" class="nav-link">CSS</a></li><li class="dropdown-subitem"><a href="/carmineprince-docs/pages/efc5a2/" class="nav-link">JavaScript</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="框架" class="dropdown-title"><a href="/carmineprince-docs/frame/" class="link-title">框架</a> <span class="title" style="display:none;">框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4></h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/carmineprince-docs/pages/37498d/" class="nav-link">Vue</a></li><li class="dropdown-subitem"><a href="/carmineprince-docs/pages/fad6ff/" class="nav-link">React</a></li><li class="dropdown-subitem"><a href="/carmineprince-docs/pages/8c812a/" class="nav-link">TypeScript</a></li><li class="dropdown-subitem"><a href="/carmineprince-docs/pages/667cb2/" class="nav-link">Node</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="后端" class="dropdown-title"><a href="/carmineprince-docs/back/" class="link-title">后端</a> <span class="title" style="display:none;">后端</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4></h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/carmineprince-docs/pages/497c5f/" class="nav-link">Python</a></li><li class="dropdown-subitem"><a href="/carmineprince-docs/pages/157def/" class="nav-link">运维</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="索引" class="dropdown-title"><a href="/carmineprince-docs/archives/" class="link-title">索引</a> <span class="title" style="display:none;">索引</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/carmineprince-docs/categories/" class="nav-link">分类</a></li><li class="dropdown-item"><!----> <a href="/carmineprince-docs/tags/" class="nav-link">标签</a></li><li class="dropdown-item"><!----> <a href="/carmineprince-docs/archives/" class="nav-link">归档</a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar" style="display:none;"><div class="blogger"><img src="https://carmineprince.oss-cn-qingdao.aliyuncs.com/2021/10/1634723096112.jpg"> <div class="blogger-info"><h3>Ziqi Wang</h3> <span>胡思乱想程序员</span></div></div> <nav class="nav-links"><div class="nav-item"><a href="/carmineprince-docs/" class="nav-link">首页</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="前端" class="dropdown-title"><a href="/carmineprince-docs/web/" class="link-title">前端</a> <span class="title" style="display:none;">前端</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4></h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/carmineprince-docs/pages/6a1054/" class="nav-link">HTML</a></li><li class="dropdown-subitem"><a href="/carmineprince-docs/pages/31329c/" class="nav-link">CSS</a></li><li class="dropdown-subitem"><a href="/carmineprince-docs/pages/efc5a2/" class="nav-link">JavaScript</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="框架" class="dropdown-title"><a href="/carmineprince-docs/frame/" class="link-title">框架</a> <span class="title" style="display:none;">框架</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4></h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/carmineprince-docs/pages/37498d/" class="nav-link">Vue</a></li><li class="dropdown-subitem"><a href="/carmineprince-docs/pages/fad6ff/" class="nav-link">React</a></li><li class="dropdown-subitem"><a href="/carmineprince-docs/pages/8c812a/" class="nav-link">TypeScript</a></li><li class="dropdown-subitem"><a href="/carmineprince-docs/pages/667cb2/" class="nav-link">Node</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="后端" class="dropdown-title"><a href="/carmineprince-docs/back/" class="link-title">后端</a> <span class="title" style="display:none;">后端</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4></h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/carmineprince-docs/pages/497c5f/" class="nav-link">Python</a></li><li class="dropdown-subitem"><a href="/carmineprince-docs/pages/157def/" class="nav-link">运维</a></li></ul></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="索引" class="dropdown-title"><a href="/carmineprince-docs/archives/" class="link-title">索引</a> <span class="title" style="display:none;">索引</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/carmineprince-docs/categories/" class="nav-link">分类</a></li><li class="dropdown-item"><!----> <a href="/carmineprince-docs/tags/" class="nav-link">标签</a></li><li class="dropdown-item"><!----> <a href="/carmineprince-docs/archives/" class="nav-link">归档</a></li></ul></div></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/carmineprince-docs/pages/37498d/" class="sidebar-link">从0开始搭建一套规范的Vue3.x项目工程环境</a></li><li><a href="/carmineprince-docs/pages/9e6c55/" class="sidebar-link">解决vite构建vue3项目报错</a></li><li><a href="/carmineprince-docs/pages/4ec42d/" class="sidebar-link">解决Vue3中无法使用$ref的问题</a></li><li><a href="/carmineprince-docs/pages/4b2658/" class="sidebar-link">项目中手动增加scss支持</a></li><li><a href="/carmineprince-docs/pages/04606f/" class="sidebar-link">el-table多选分页保留</a></li><li><a href="/carmineprince-docs/pages/d3d44d/" class="sidebar-link">解决npm run dev启动两个页面问题</a></li><li><a href="/carmineprince-docs/pages/9304a1/" class="sidebar-link">PC端和移动端兼容方案</a></li><li><a href="/carmineprince-docs/pages/903ec7/" class="sidebar-link">SFC-Use-script-setup</a></li><li><a href="/carmineprince-docs/pages/033499/" class="sidebar-link">vue2x面试前回炉重造</a></li><li><a href="/carmineprince-docs/pages/01c249/" class="sidebar-link">Vue3+Vite2配置</a></li><li><a href="/carmineprince-docs/pages/07b5f0/" aria-current="page" class="active sidebar-link">flvjs+vue 视频播放(手动追帧、断开重连、多个视频同时直播)</a></li><li><a href="/carmineprince-docs/pages/0de523/" class="sidebar-link">vue平滑滚动到指定位置</a></li><li><a href="/carmineprince-docs/pages/b275f3/" class="sidebar-link">vant项目使用postcss-pxtorem和amfe-flexible 进行移动端适配</a></li><li><a href="/carmineprince-docs/pages/bb8b9a/" class="sidebar-link">vue 使用v-html绑定时，内部元素不会继承外部css的解决方案</a></li><li><a href="/carmineprince-docs/pages/8e157d/" class="sidebar-link">vue-awesome-swiper缩略图控制循环无效解决方案</a></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Nuxt相关</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <div><main class="page"><div class="theme-vdoing-wrapper "><div class="articleInfo-wrap" data-v-1cd794fe><div class="articleInfo" data-v-1cd794fe><ul class="breadcrumbs" data-v-1cd794fe><li data-v-1cd794fe><a href="/carmineprince-docs/" title="首页" class="iconfont icon-home router-link-active" data-v-1cd794fe></a></li> <li data-v-1cd794fe><a href="/carmineprince-docs/categories/?category=Vue%E7%9B%B8%E5%85%B3" title="分类" data-v-1cd794fe>Vue相关</a></li> <!----> <!----></ul> <div class="info" data-v-1cd794fe><div title="作者" class="author iconfont icon-touxiang" data-v-1cd794fe><a href="https://github.com/carmineprince" target="_blank" title="作者" class="beLink" data-v-1cd794fe>carmineprince</a></div> <div title="创建时间" class="date iconfont icon-riqi" data-v-1cd794fe><a href="javascript:;" data-v-1cd794fe>2021-10-20</a></div> <!----></div></div></div> <!----> <div class="content-wrapper"><!----> <h1><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAABGpJREFUSA3tVVtoXFUU3fvOI53UlmCaKIFmwEhsE7QK0ipFEdHEKpXaZGrp15SINsXUWvBDpBgQRKi0+KKoFeJHfZA+ED9KKoIU2gYD9UejTW4rVIzm0VSTziPzuNu1z507dibTTjL4U/DAzLn3nL3X2o91ziX6f9wMFdh6Jvbm9nNSV0msViVO6tN1Rm7NMu2OpeJ9lWBUTDxrJbYTS0hInuwciu9eLHlFxCLCZEk3MegsJmZ5K/JD6t7FkFdEvGUo1g7qJoG3MHImqRIn8/nzY1K9UPKKiJmtnUqHVE3Gbuay6vJE/N2FEmuxFjW2nUuE0yQXRRxLiTUAzs36zhZvOXJPdX850EVnnLZkB8prodQoM5JGj7Xk2mvC7JB8tG04Ef5PiXtG0UtxupRQSfTnBoCy554x18yJHI6I+G5Eru4LHmPJZEQsrvPUbMiA8G/WgMK7w7I+ez7++o2ANfbrjvaOl1tFMs+htG3IrZH9/hDX1Pr8Tc0UvH8tcX29KzAgIGcEkINyW5BF9x891hw6VYqgJHEk0huccS7vh3C6gTiODL+26huuBtbct8eZnqLML8PkxGYpuPZBqtqwkSjgc4mB5gbgig5i+y0UDK35LMxXisn9xQtK+nd26gTIHsHe/oblK/b29fUmN/8Y+9jAQrnBp56m1LcDlDp9irKTExSKduXJVWSqdBMA08pEJnEIOB3FPPMybu/oeV8zFeYN3xx576Q6RH+VmplE4ncQV5v+5rzSoyOU7PuEAg8g803PwBJ0CExno/jcMbN8tONYeOmHiuUNryvm3fRUy4tMPVLdAGkUhNWuggGrJcXPv+ouCjz0MKUHz1J2/E8IC9nqTabcxgaBYM0hPhD5Y65FsbxRQKxCQrDjDctW7PUM3HuZunFyifSAqEfuzCp48Il24luWUWZoyJCaPR82jE0+kFA643wRFVni4RYSq3ohJO2pZ7B5dO4xkDWbEpossJPLSrPjYID8rS2UHTlvyNxqIGsg674XJJ7vnh5L7PNwC4hh2sjCI96mzszOTpxLF0T7l88Yz7lAuK6OnL8gXLOnTvpzSb22YG8W7us3jSebFHeeqnXRG1vt+MoUM84LQIBmMsCTAcOauTh0T0l0neQK7m2bLMt2mGxU3HYssS0J2cdv5wljlPsrIuZLAG/2DOZIXgCYT8uMGZN+e2kSirfxZOPCsC0f24nTZzspnVn9VePS1Z5vubmAGGXG8ZFno9Hel0yfA5ZPhF7Dh972BQJ2qCpgH67lmWtBYbvk6sz02wjky2vXyz0XErP/kFB619js1BtwfOV4OPRqOQBjy3Qbk18vigUPPSD5ceHnwck7W9bhAqZdd7SuG7w4/P2F/GaJh8c7e9qgow+Q7cGBo+98WsLkuktFqiZabtXuQTu/Y5ETbR0v7tNSFnvrmu6pjdoan2KjMu8q/Hmj1EfCO2ZGfEIbIXKUlw8qaX9/b2oeSJmFksSeT/Fn0V3nSypChh4Gjh74ybO9aeZ/AN2dwciu2/MhAAAAAElFTkSuQmCC">
+          flvjs+vue 视频播放(手动追帧、断开重连、多个视频同时直播)
+        </h1> <!----> <div class="theme-vdoing-content content__default"><h1 id="flvjs-vue-视频播放-手动追帧、断开重连、多个视频同时直播"><a href="#flvjs-vue-视频播放-手动追帧、断开重连、多个视频同时直播" class="header-anchor">#</a> flvjs+vue 视频播放(手动追帧、断开重连、多个视频同时直播)</h1> <div class="language- line-numbers-mode"><pre class="language-text"><code>&lt;script&gt;
+import flvjs from 'flv.js/dist/flv.min.js'
+
+export default {
+  name:'viewVideo',
+  data() {
+    return {
+      src:&quot;&quot;,  //flv格式的地址
+      timerId:null,
+      loadStatus:true,
+      id: 'videoElement'+Math.random(),
+      statusMsg:'摄像机未开启，请联系'
+    };
+  },
+ created(){
+     if(this.timerId){
+      clearInterval(this.timerId)
+      this.timerId=null
+    }
+  },
+   mounted() {
+      this.$nextTick(() =&gt; {
+        this.setsrc();
+      })
+    },
+  destroyed(){
+    console.log(&quot;destorying video&quot;);
+    if(this.timerId){
+      clearInterval(this.timerId)
+      this.timerId=null
+    }
+    if (this.flvPlayer !== null) {
+        this.flvPlayer.pause();
+        this.flvPlayer.destroy();
+        this.flvPlayer = null;
+      }
+  },
+  methods: {
+    createVideo(){
+      let that=this
+     console.log(that.flvPlayer);
+       if (that.flvPlayer) {
+           that.flvPlayer.pause();
+           that.flvPlayer.destroy();
+           that.flvPlayer = null;
+        }
+         if (that.timerId !== null) {
+         clearInterval(that.timerId);
+            }
+      that.videoElement = document.getElementById(that.id)
+      if (flvjs.isSupported()) {
+        that.flvPlayer = flvjs.createPlayer({
+          type: 'flv',
+          url: that.src,
+          isLive: true, 
+        },{
+             cors: true, // 是否跨域
+            enableWorker: true, // 是否多线程工作
+            enableStashBuffer: false, // 是否启用缓存
+            stashInitialSize: 128, // 缓存大小(kb)  默认384kb
+            autoCleanupSourceBuffer: true // 是否自动清理缓存
+        })
+      }
+         that.flvPlayer.on(flvjs.Events.ERROR, (errorType, errorDetail, errorInfo) =&gt; {
+		    console.log(&quot;errorType:&quot;, errorType);
+        console.log(&quot;errorDetail:&quot;, errorDetail);
+        console.log(&quot;errorInfo:&quot;, errorInfo);
+        // this.loadStatus=true
+        // this.statusMsg=&quot;正在重连。。。&quot;
+        //视频出错后销毁重新创建
+         if (that.flvPlayer) {
+          that.flvPlayer.pause();
+          that.flvPlayer.unload();
+          that.flvPlayer.detachMediaElement();
+          that.flvPlayer.destroy();
+          that.flvPlayer= null;
+        }
+          that.createVideo();
+      });
+      that.flvPlayer.on(&quot;statistics_info&quot;, function (res) {
+       if (that.lastDecodedFrame == 0) {
+         that.lastDecodedFrame = res.decodedFrames;
+         return;
+       }
+       if (that.lastDecodedFrame != res.decodedFrames) {
+         that.lastDecodedFrame = res.decodedFrames;
+       } else {
+           that.lastDecodedFrame = 0;
+           if (that.flvPlayer) {
+             that.flvPlayer.pause();
+             that.flvPlayer.unload();
+             that.flvPlayer.detachMediaElement();
+             that.flvPlayer.destroy();
+             that.flvPlayer= null;
+              that.createVideo();
+         }
+           
+       }
+     });
+
+             that.flvPlayer.attachMediaElement(this.videoElement)
+             that.flvPlayer.load()
+            that.flvPlayer.play()
+            if (that.timerId !== null) {
+          clearInterval(that.timerId);
+             }
+         that.timerId = setInterval(() =&gt; {
+          if (that.videoElement.buffered.length &gt; 0) {
+            const end = that.videoElement.buffered.end(0);  // 视频结尾时间
+            const current = that.videoElement.currentTime;  //  视频当前时间
+            const diff = end - current;// 相差时间
+            console.log(diff);
+            const diffCritical = 4; // 这里设定了超过4秒以上就进行跳转
+            const diffSpeedUp = 1; // 这里设置了超过1秒以上则进行视频加速播放
+            const maxPlaybackRate = 4;// 自定义设置允许的最大播放速度
+            let playbackRate = 1.0; // 播放速度
+            if (diff &gt; diffCritical) {
+              console.log(&quot;相差超过4秒，进行跳转&quot;);
+              that.videoElement.currentTime = end - 1.5;
+              playbackRate = Math.max(1, Math.min(diffCritical, 16));
+            } else if (diff &gt; diffSpeedUp) {
+              console.log(&quot;相差超过1秒，进行加速&quot;);
+              playbackRate = Math.max(1, Math.min(diff, maxPlaybackRate, 16))
+            }
+            that.videoElement.playbackRate = playbackRate;
+            if (that.videoElement.paused) {
+              that.flvPlayer.play()
+            }
+          }
+        }, 1000);
+    },
+    setsrc(){
+    if(this.url){
+    this.src =this.url;
+    this.createVideo();
+    }
+  },
+},
+  props: {
+    url:  {
+        default: null,
+        required: true,
+        type: String | null
+      },
+  },
+    watch: {
+      url: {
+        handler(newValue) {
+        if(newValue != null){
+          this.loadStatus=false
+          this.src=newValue
+          this.$nextTick(() =&gt; {
+        this.setsrc();
+      })
+        }
+        },
+        deep: true,
+        immediate: true,
+      }
+    },
+}
+&lt;/script&gt;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br><span class="line-number">97</span><br><span class="line-number">98</span><br><span class="line-number">99</span><br><span class="line-number">100</span><br><span class="line-number">101</span><br><span class="line-number">102</span><br><span class="line-number">103</span><br><span class="line-number">104</span><br><span class="line-number">105</span><br><span class="line-number">106</span><br><span class="line-number">107</span><br><span class="line-number">108</span><br><span class="line-number">109</span><br><span class="line-number">110</span><br><span class="line-number">111</span><br><span class="line-number">112</span><br><span class="line-number">113</span><br><span class="line-number">114</span><br><span class="line-number">115</span><br><span class="line-number">116</span><br><span class="line-number">117</span><br><span class="line-number">118</span><br><span class="line-number">119</span><br><span class="line-number">120</span><br><span class="line-number">121</span><br><span class="line-number">122</span><br><span class="line-number">123</span><br><span class="line-number">124</span><br><span class="line-number">125</span><br><span class="line-number">126</span><br><span class="line-number">127</span><br><span class="line-number">128</span><br><span class="line-number">129</span><br><span class="line-number">130</span><br><span class="line-number">131</span><br><span class="line-number">132</span><br><span class="line-number">133</span><br><span class="line-number">134</span><br><span class="line-number">135</span><br><span class="line-number">136</span><br><span class="line-number">137</span><br><span class="line-number">138</span><br><span class="line-number">139</span><br><span class="line-number">140</span><br><span class="line-number">141</span><br><span class="line-number">142</span><br><span class="line-number">143</span><br><span class="line-number">144</span><br><span class="line-number">145</span><br><span class="line-number">146</span><br><span class="line-number">147</span><br><span class="line-number">148</span><br><span class="line-number">149</span><br><span class="line-number">150</span><br><span class="line-number">151</span><br><span class="line-number">152</span><br><span class="line-number">153</span><br><span class="line-number">154</span><br><span class="line-number">155</span><br><span class="line-number">156</span><br><span class="line-number">157</span><br><span class="line-number">158</span><br><span class="line-number">159</span><br><span class="line-number">160</span><br><span class="line-number">161</span><br><span class="line-number">162</span><br></div></div><div class="language- line-numbers-mode"><pre class="language-text"><code>&lt;template&gt;
+  &lt;div class=&quot;hello&quot; style=&quot;width:100%; height:100%;background-color:#000000;&quot;&gt;
+    &lt;section  v-if=&quot;!loadStatus&quot; style=&quot;width:100%; height:100%;&quot;&gt;
+      &lt;video autoplay controls width=&quot;100%&quot; height=&quot;100%&quot; :id=&quot;id&quot;  muted&gt;&lt;/video&gt;
+    &lt;/section&gt;
+    &lt;div v-else
+         style=&quot;width: 100%;height: 100%;display: flex;justify-content:center;align-items:center;cursor: pointer&quot;&gt;
+      &lt;span style=&quot;color: wheat;font-size: 14px;&quot;&gt;&lt;i class=&quot;el-icon-warning-outline&quot; style=&quot;margin-right: 10px&quot;&gt;&lt;/i&gt;{{statusMsg}}&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><div class="language- line-numbers-mode"><pre class="language-text"><code>&lt;style scoped&gt;
+h3 {
+  margin: 40px 0 0;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+a {
+  color: #42b983;
+}
+&lt;/style&gt;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><p>原文链接：https://blog.csdn.net/weixin_51890314/article/details/114262827</p></div></div> <!----> <div class="page-edit"><!----> <div class="tags"><a href="/carmineprince-docs/tags/?tag=flvjs" title="标签">#flvjs</a><a href="/carmineprince-docs/tags/?tag=vue" title="标签">#vue</a><a href="/carmineprince-docs/tags/?tag=%E8%A7%86%E9%A2%91" title="标签">#视频</a></div> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">10/21/2021, 1:52:09 PM</span></div></div> <div class="page-nav-wapper"><div class="page-nav-centre-wrap"><a href="/carmineprince-docs/pages/01c249/" class="page-nav-centre page-nav-centre-prev"><div class="tooltip">Vue3+Vite2配置</div></a> <a href="/carmineprince-docs/pages/0de523/" class="page-nav-centre page-nav-centre-next"><div class="tooltip">vue平滑滚动到指定位置</div></a></div> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/carmineprince-docs/pages/01c249/" class="prev">Vue3+Vite2配置</a></span> <span class="next"><a href="/carmineprince-docs/pages/0de523/">vue平滑滚动到指定位置</a>→
+      </span></p></div></div></div> <div class="article-list"><div class="article-title"><a href="/carmineprince-docs/archives/" class="iconfont icon-bi">最近更新</a></div> <div class="article-wrapper"><dl><dd>01</dd> <dt><a href="/carmineprince-docs/pages/7de3c0/"><div>Layui form表单input获取回车事件</div></a> <span>10-20</span></dt></dl><dl><dd>02</dd> <dt><a href="/carmineprince-docs/pages/5b95c1/"><div>在Mac中安装node、npm</div></a> <span>10-20</span></dt></dl><dl><dd>03</dd> <dt><a href="/carmineprince-docs/pages/8e157d/"><div>vue-awesome-swiper缩略图控制循环无效解决方案</div></a> <span>10-20</span></dt></dl> <dl><dd></dd> <dt><a href="/carmineprince-docs/archives/" class="more">更多文章&gt;</a></dt></dl></div></div></main></div> <div class="footer"><!----> 
+  Theme by
+  <a href="https://github.com/xugaoyi/vuepress-theme-vdoing" target="_blank" title="本站主题">Vdoing</a> 
+    | Copyright © 2021-2021
+    <span></span></div> <div class="buttons"><div title="返回顶部" class="button blur go-to-top iconfont icon-fanhuidingbu" style="display:none;"></div> <div title="去评论" class="button blur go-to-comment iconfont icon-pinglun" style="display:none;"></div> <div title="主题模式" class="button blur theme-mode-but iconfont icon-zhuti"><ul class="select-box" style="display:none;"><li class="iconfont icon-zidong">
+          跟随系统
+        </li><li class="iconfont icon-rijianmoshi">
+          浅色模式
+        </li><li class="iconfont icon-yejianmoshi">
+          深色模式
+        </li><li class="iconfont icon-yuedu">
+          阅读模式
+        </li></ul></div></div> <!----> <!----> <!----></div><div class="global-ui"></div></div>
+    <script src="/carmineprince-docs/assets/js/app.9ec8c49f.js" defer></script><script src="/carmineprince-docs/assets/js/2.f619f824.js" defer></script><script src="/carmineprince-docs/assets/js/27.fcad0c23.js" defer></script>
+  </body>
+</html>
