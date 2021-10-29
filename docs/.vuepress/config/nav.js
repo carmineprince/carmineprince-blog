@@ -26,6 +26,7 @@ module.exports = [
           { text: "React", link: "/pages/fad6ff/" },
           { text: "TypeScript", link: "/pages/8c812a/" },
           { text: "Node", link: "/pages/667cb2/" },
+          { text: "Flutter", link: "/pages/6df927/" },
         ],
       },
     ],
